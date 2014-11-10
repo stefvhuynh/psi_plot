@@ -15,5 +15,4 @@
 .DS_Store
 
 # Ignore secrets file
-config/initializers/secret_tokens.yml
 config/secrets.yml
