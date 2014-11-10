@@ -15,4 +15,4 @@
 .DS_Store
 
 # Ignore secrets file
-secrets.yml
+/config/secrets.yml
