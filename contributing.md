@@ -21,8 +21,8 @@ It is really important that we try to do this project TDD-style as much
 as possible. This makes for more modular and maintainable code. Below
 are some useful links for testing.
 
-Testing [models](http://everydayrails.com/2012/03/19/testing-series-rspec-models-factory-girl.html)
-Testing [controllers](http://everydayrails.com/2012/04/07/testing-series-rspec-controllers.html)
-Using [Jasmine](http://code.tutsplus.com/tutorials/testing-your-javascript-with-jasmine--net-21229)
-Testing [Backbone](http://blog.bandzarewicz.com/blog/2012/03/08/backbone-dot-js-tdd-with-jasmine-part-one-the-model/)
-Testing [Angular](http://blog.zerosum.org/2014/01/17/rails-angular-jasmine.html)
+[Testing models](http://everydayrails.com/2012/03/19/testing-series-rspec-models-factory-girl.html)  
+[Testing controllers](http://everydayrails.com/2012/04/07/testing-series-rspec-controllers.html)  
+[Using Jasmine](http://code.tutsplus.com/tutorials/testing-your-javascript-with-jasmine--net-21229)  
+[Testing Backbone](http://blog.bandzarewicz.com/blog/2012/03/08/backbone-dot-js-tdd-with-jasmine-part-one-the-model/)  
+[Testing Angular](http://blog.zerosum.org/2014/01/17/rails-angular-jasmine.html)  
