@@ -1,4 +1,5 @@
 PsiPlot
 =======
-To contribute, please look [this](https://github.com/stefvhuynh/psi_plot/blob/master/contributing.md)
-over first.
+To contribute, please take a look at 
+[this file](https://github.com/stefvhuynh/psi_plot/blob/master/contributing.md) 
+first.
