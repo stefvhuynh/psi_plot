@@ -14,6 +14,8 @@ group :development, :test do
   gem 'debugger'
   gem 'rspec-rails'
   gem 'factory_girl_rails'
+  gem 'jasmine'
+  gem 'jasmine-jquery-rails'
 end
 
 group :development do
