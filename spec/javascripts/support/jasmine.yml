@@ -12,7 +12,7 @@
 #
 src_files:
   - assets/application.js
-
+  - assets/jasmine-jquery.js
 # stylesheets
 #
 # Return an array of stylesheet filepaths relative to src_dir to include before jasmine specs.
@@ -121,4 +121,3 @@ boot_files:
 #
 # rack_options:
 #   server: 'thin'
-
