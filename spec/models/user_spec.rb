@@ -24,7 +24,7 @@ RSpec.describe User, :type => :model do
       it 'requires a unique email' do
         FactoryGirl.create(:user, email: 'charliebrown@peanuts.com')
         expect(
-          FactoryGirl.build(:user, username: 'charliebrown@peanuts.com')
+          FactoryGirl.build(:user, email: 'charliebrown@peanuts.com')
         ).not_to be_valid
       end
       
