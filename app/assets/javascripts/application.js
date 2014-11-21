@@ -12,5 +12,11 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
+//=
+//= require ./angular/angular.min
+//= require_tree ./angular
+//= require ./psiplotapp
+//
+//= require angular-rails-templates
+//=
 //= require_tree .
