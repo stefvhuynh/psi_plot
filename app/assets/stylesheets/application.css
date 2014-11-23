@@ -13,3 +13,68 @@
  *= require_tree .
  *= require_self
  */
+
+
+/* RESETS */
+
+html, head, body, h1, h2, h3, h4, a, img, span, div,
+form, input, button,
+header, footer, main, section, article, menu, menuitem {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font: inherit;
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+	text-decoration: none;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="submit"] {
+  -webkit-appearance: none;
+  display: inline-block;
+  box-sizing: content-box;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  width: auto;
+  font: inherit;
+  vertical-align: baseline;
+  background: transparent;
+  color: inherit;
+}
+
+input[type="submit"] {
+  display: inline;
+  cursor: pointer;
+}
+
+/* CLEAR FIX */
+
+.group:after {
+	content: "";
+	display: block;
+	clear: both;
+}
+
+
+/* STYLES */
+
+
+h1 {
+	font-size: 40px;
+	padding: 20px;
+}
+
+h2 {
+	font-size: 30px;
+	padding: 10px;
+}
