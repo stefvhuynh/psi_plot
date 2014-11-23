@@ -20,6 +20,10 @@ PsiPlotApp.config(['$routeProvider', '$locationProvider', function($routeProvide
       templateUrl: 'projects/index.html',
       controller: 'ProjectIndexCtrl'
     }).
+		when('/projects/:projectID', {
+			templateUrl: 'projects/show.html',
+			controller: 'ProjectShowCtrl'
+		}).
     otherwise({
       redirectTo: '/home'
     });
