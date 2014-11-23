@@ -1,8 +1,8 @@
-PsiPlotApp.controller('CollectionIndexCtrl', ['$scope', function($scope) {
+PsiPlotApp.controller('ProjectIndexCtrl', ['$scope', function($scope) {
 
   //Sample Data
 
-  $scope.collections = [{
+  $scope.projects = [{
     title: "Example 1",
     content: "First example"
   }, {
