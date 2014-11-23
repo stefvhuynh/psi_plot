@@ -20,10 +20,10 @@
 html, head, body, h1, h2, h3, h4, a, img, span, div,
 form, input, button,
 header, footer, main, section, article, menu, menuitem {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	font: inherit;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
 }
 
 ul {
@@ -31,7 +31,7 @@ ul {
 }
 
 a {
-	text-decoration: none;
+  text-decoration: none;
 }
 
 input[type="text"],
@@ -60,9 +60,9 @@ input[type="submit"] {
 /* CLEAR FIX */
 
 .group:after {
-	content: "";
-	display: block;
-	clear: both;
+  content: "";
+  display: block;
+  clear: both;
 }
 
 
@@ -70,11 +70,11 @@ input[type="submit"] {
 
 
 h1 {
-	font-size: 40px;
-	padding: 20px;
+  font-size: 40px;
+  padding: 20px;
 }
 
 h2 {
-	font-size: 30px;
-	padding: 10px;
+  font-size: 30px;
+  padding: 10px;
 }
