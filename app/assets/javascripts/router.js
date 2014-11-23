@@ -2,25 +2,22 @@ PsiPlotApp.config(['$routeProvider', '$locationProvider', function($routeProvide
 
   $locationProvider.html5Mode(true)
 
-  $routeProvider.
-    when('/', {
+  $routeProvider.when('/', {
       redirectTo: function(current, path, search) {
         if(search.goto) {
-          return "/" + search.goto
+          return '/' + search.goto;
         } else {
-          return '/home'
+          return '/home';
         }
       }
-    }).
-    when('/home', {
+    }).when('/home', {
       templateUrl: 'home.html',
       controller: 'HomeCtrl'
-    }).
-    when('/index', {
+    }).when('/index', {
       templateUrl: 'collections/index.html',
       controller: 'CollectionIndexCtrl'
-    }).
-    otherwise({
+    }).otherwise({
       redirectTo: '/home'
     });
+
 }]);
