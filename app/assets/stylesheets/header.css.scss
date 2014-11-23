@@ -1,0 +1,18 @@
+header {
+	background: black;
+	color: white;
+	
+	.logo {
+		float: left;
+	}
+	
+	.menu {
+		float: right;
+		
+		li {
+			float: left;
+			font-size: 20px;
+			padding: 20px;
+		}
+	}
+}
