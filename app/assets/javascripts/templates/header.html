@@ -1,0 +1,29 @@
+<header class="group" ng-controller="HeaderCtrl">
+	
+	<div class="errors">{{errorMsg}}</div>
+	
+	<div class="logo">
+		<h1>Psi Plot</h1>
+	</div>
+	
+	<div class="menu group">
+		
+		<ul class="logged-in">
+			<li class="username">{{currentUser}}</li>
+			<li ng-click="logout()">Logout</li>
+		</ul>
+		
+		<ul class="logged-out">
+			<li class="credentials">
+				<label>Email: <input ng-model="userCredentials.email"></label>
+				<label>Password: <input type="password" ng-model="userCredentials.password"></label>
+			</li>
+			<li>Create Account</li>
+			<li ng-click="login()">Login</li>
+		</ul>
+		
+
+
+	</ul>
+	
+</header>

@@ -1,1 +1,3 @@
-PsiPlotApp = angular.module('PsiPlotApp', ['ngRoute', 'templates']);
+PsiPlotApp = angular.module('PsiPlotApp', ['ngRoute', 'ngAnimate', 'templates']);
+
+PsiPlotApp.render = {}

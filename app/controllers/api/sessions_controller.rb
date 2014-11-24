@@ -8,7 +8,7 @@ class Api::SessionsController < ApplicationController
 
     if @user
       sign_in!(@user)
-      render :show
+      render json: @user
     else
       render json: { errors: 'Invalid credentials' }, status: :unauthorized
     end

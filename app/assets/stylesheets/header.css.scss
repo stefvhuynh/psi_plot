@@ -1,6 +1,20 @@
 header {
 	background: black;
 	color: white;
+	height: 100px;
+	
+	.errors {
+		position: absolute;
+		top: 0px;
+		right: 0;
+		width: 200px;
+		text-align: center;
+		color: black;
+		font-weight: bold;
+		background: red;
+		padding: 5px;
+		display: none;
+	}
 	
 	.logo {
 		float: left;
@@ -9,10 +23,36 @@ header {
 	.menu {
 		float: right;
 		
-		li {
+		.logged-in, .logged-out {
+			display: none;
+		}
+		
+		ul {
 			float: left;
-			font-size: 20px;
-			padding: 20px;
+			
+			li {
+				float: left;
+				font-size: 20px;
+				padding: 20px 20px;
+		
+				input {
+					width: 100px;
+					font-size: 14px;
+					border: 1px solid white;
+					background: white;
+					color: black;
+					padding: 5px;
+					margin: 0 20px;
+				}
+			}
+			
+			.username {
+
+			}
+		
+			.credentials {
+				padding: 20px;
+			}
 		}
 	}
 }

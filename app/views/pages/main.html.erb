@@ -1,1 +1,7 @@
-<div ng-view ng-controller="MainCtrl"></div>
+<div ng-view ng-controller="AppCtrl"></div>
+
+<% if @user %>
+	<script>
+		currentUser = "<%= @user.email %>"
+	</script>
+<% end %>
