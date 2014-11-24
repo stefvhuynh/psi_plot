@@ -29,17 +29,13 @@ RSpec.describe Api::ProjectsController, :type => :controller do
 
       it 'fetches all the projects for a user' do
         expect(assigns(:projects)).to match_array projects
-        assigns(:projects).each do |project|
-          expect(project.user_id).to eq user.id
-        end
       end
 
       it 'does not fetch the projects for other users' do
         user2 = FactoryGirl.create(:user)
-        projects2 = FactoryGirl.create_list(:project, 5, user_id: user2.id)
+        user2_projects = FactoryGirl.create_list(:project, 5, user_id: user2.id)
         get :index, format: :json
-        expect(assigns(:projects)).not_to include projects2
-        expect(assigns(:projects)).to match_array projects
+        expect(assigns(:projects)).not_to include user2_projects
       end
     end
   end
