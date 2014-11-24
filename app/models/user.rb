@@ -1,4 +1,7 @@
 class User < ActiveRecord::Base
+
+  has_many :projects
+
   validates :first_name, :last_name, :password_digest, presence: true
   validates :email, :session_token, presence: true, uniqueness: true
   validates :password, length: { minimum: 6, allow_nil: true }
@@ -32,11 +35,11 @@ class User < ActiveRecord::Base
   def ensure_session_token
     self.session_token ||= SecureRandom::urlsafe_base64
   end
-  
+
   def email_is_in_a_valid_format
     unless self.email =~ /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
       errors.add(:email, 'is not in a valid format')
     end
   end
-  
+
 end
