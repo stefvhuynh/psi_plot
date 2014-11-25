@@ -16,4 +16,34 @@ class Api::ProjectsController < ApplicationController
     end
   end
 
+  def create
+    @project = current_user.projects.build(project_params)
+
+    if @project.save
+      render :show, status: :ok
+    else
+      render nothing: true, status: :unprocessable_entity
+    end
+  end
+
+  def update
+    @project = Project.find_by(id: params[:id], user_id: current_user.id)
+
+    if @project
+      if @project.update(project_params)
+        render :show, status: :ok
+      else
+        render nothing: true, status: :unprocessable_entity
+      end
+    else
+      render nothing: true, status: :not_found
+    end
+  end
+
+  private
+
+  def project_params
+    params.require(:project).permit(:name, :order, :description)
+  end
+
 end
