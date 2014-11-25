@@ -9,6 +9,27 @@ RSpec.describe Project, :type => :model do
       end
     end
 
+    describe 'order' do
+      it 'requires an order' do
+        expect(FactoryGirl.build(:project, order: nil)).not_to be_valid
+      end
+
+      it 'requires the orders to be unique for each set of user projects' do
+        project1 = FactoryGirl.create(:project, user_id: 1)
+        project2 = FactoryGirl.build(:project, user_id: 1, order: project1.order)
+        expect(project2).not_to be_valid
+
+        project2.order = project1.order + 1
+        expect(project2).to be_valid
+      end
+
+      it 'does not enforce the uniquness requirement across users' do
+        project1 = FactoryGirl.create(:project, user_id: 1)
+        project2 = FactoryGirl.build(:project, user_id: 2, order: project1.order)
+        expect(project2).to be_valid
+      end
+    end
+
     describe 'description' do
       it 'has a maximum length of 150 characters' do
         long_description = 'x' * 151
