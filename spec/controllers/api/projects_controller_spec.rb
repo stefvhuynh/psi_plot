@@ -2,10 +2,6 @@ require 'rails_helper'
 
 RSpec.describe Api::ProjectsController, :type => :controller do
 
-  def sign_in(user)
-    request.session[:token] = user.session_token
-  end
-
   describe 'GET #index' do
     let(:user) { FactoryGirl.create(:user) }
     let!(:projects) { FactoryGirl.create_list(:project, 5, user_id: user.id) }
