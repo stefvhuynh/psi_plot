@@ -202,7 +202,8 @@ RSpec.describe Api::ProjectsController, :type => :controller do
         end
 
         it 'does not allow the updating of a non-owned project' do
-          project2 = FactoryGirl.create(:project, user_id: user.id + 1)
+          user2 = FactoryGirl.create(:project)
+          project2 = FactoryGirl.create(:project, user_id: user2.id)
           put :update,
             id: project2.id,
             project: { name: "#{project2.name} v.2.0" },
