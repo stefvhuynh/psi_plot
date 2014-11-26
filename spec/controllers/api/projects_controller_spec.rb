@@ -234,7 +234,43 @@ RSpec.describe Api::ProjectsController, :type => :controller do
   end
 
   describe 'DELETE #destroy' do
+    context 'signed out' do
+      before do
+        sign_out
+        delete :destroy, id: projects.first, format: :json
+      end
 
+      it 'responds with a 401 unauthorized' do
+        expect(response.status).to eq 401
+      end
+
+      it 'does not delete the record' do
+        expect(Project.all).to include projects.first
+      end
+    end
+
+    context 'signed in' do
+      before do
+        sign_in(user)
+        delete :destroy, id: projects.first, format: :json
+      end
+
+      it 'responds with a 200 OK' do
+        expect(response.status).to eq 200
+      end
+
+      it 'deletes the record if the user owns it' do
+        expect(Project.all).not_to include projects.first
+      end
+
+      it 'does not delete the record if the user does not own it' do
+        user2 = FactoryGirl.create(:user)
+        user2_project = FactoryGirl.create(:project, user_id: user2.id)
+        delete :destroy, id: user2_project, format: :json
+        expect(response.status).to eq 404
+        expect(Project.all).to include user2_project
+      end
+    end
   end
 
 end

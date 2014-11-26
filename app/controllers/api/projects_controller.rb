@@ -40,6 +40,20 @@ class Api::ProjectsController < ApplicationController
     end
   end
 
+  def destroy
+    @project = Project.find_by(id: params[:id], user_id: current_user.id)
+
+    if @project
+      if @project.destroy
+        render :show, status: :ok
+      else
+        render nothing: true, status: :unprocessable_entity
+      end
+    else
+      render nothing: true, status: :not_found
+    end
+  end
+
   private
 
   def project_params
