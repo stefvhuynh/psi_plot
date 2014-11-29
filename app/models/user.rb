@@ -1,6 +1,8 @@
 class User < ActiveRecord::Base
 
   has_many :projects
+  has_many :project_shares
+  has_many :shared_projects, through: :project_shares
 
   validates :first_name, :last_name, :password_digest, presence: true
   validates :email, :session_token, presence: true, uniqueness: true

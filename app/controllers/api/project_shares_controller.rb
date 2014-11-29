@@ -1,4 +1,5 @@
 class Api::ProjectSharesController < ApplicationController
+  before_filter :require_signed_in
 
   def create
     @project_share = ProjectShare.new(project_share_params)

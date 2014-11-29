@@ -14,7 +14,7 @@ RSpec.describe Api::ProjectSharesController, :type => :controller do
           post :create,
             project_share: FactoryGirl.attributes_for(
               :project_share,
-              project: project.id
+              project_id: project.id
             ),
             format: :json
         end
@@ -28,10 +28,21 @@ RSpec.describe Api::ProjectSharesController, :type => :controller do
             post :create,
               project_share: FactoryGirl.attributes_for(
                 :project_share,
-                project: project.id
+                project_id: project.id
               ),
               format: :json
           }.to change(ProjectShare, :count).by 1
+        end
+
+        it 'only creates a project_share for a project that exists' do
+          expect {
+            post :create,
+              project_share: FactoryGirl.attributes_for(
+                :project_share,
+                project_id: Project.last.id + 1
+              ),
+              format: :json
+          }.not_to change(ProjectShare, :count)
         end
 
         it 'only creates a project_share for a project the user owns' do
@@ -56,7 +67,7 @@ RSpec.describe Api::ProjectSharesController, :type => :controller do
           post :create,
             project_share: FactoryGirl.attributes_for(
               :project_share,
-              project: project.id
+              project_id: project.id
             ),
             format: :json
         end
