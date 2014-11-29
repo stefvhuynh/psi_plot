@@ -1,2 +1,2 @@
-module Api::ProjectShareHelper
+module Api::ProjectSharesHelper
 end

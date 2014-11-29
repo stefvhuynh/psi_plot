@@ -52,6 +52,15 @@ RSpec.describe Api::ProjectSharesController, :type => :controller do
       end
 
       context 'with invalid attributes' do
+        before do
+          post :create,
+            project_share: FactoryGirl.attributes_for(
+              :project_share,
+              project: project.id
+            ),
+            format: :json
+        end
+
         it 'responds with a 422 Unprocessable Entity'
         it 'does not create a project_share in the database'
         it 'responds with error messages'
@@ -59,7 +68,18 @@ RSpec.describe Api::ProjectSharesController, :type => :controller do
     end
 
     context 'signed out' do
-      before { sign_out }
+      before do
+        sign_out
+        post :create,
+          project_share: FactoryGirl.attributes_for(
+            :project_share,
+            project: project.id
+          ),
+          format: :json
+      end
+
+      it 'responds with a 401 Unauthorized'
+      it 'does not create a project_share in the database'
     end
   end
 
