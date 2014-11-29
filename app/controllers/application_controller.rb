@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :null_session
+  helper_method :current_user, :signed_in?
 
   def sign_in!(user)
     session[:token] = user.reset_session_token!
@@ -18,6 +19,12 @@ class ApplicationController < ActionController::Base
 
   def current_user
     @current_user ||= User.find_by(session_token: session[:token])
+  end
+
+  private
+
+  def require_signed_in
+    render nothing: true, status: :unauthorized unless signed_in?
   end
 
 end

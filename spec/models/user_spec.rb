@@ -9,13 +9,13 @@ RSpec.describe User, :type => :model do
         expect(FactoryGirl.build(:user, first_name: nil)).not_to be_valid
       end
     end
-    
+
     describe 'last_name' do
       it 'requires a last_name' do
         expect(FactoryGirl.build(:user, last_name: nil)).not_to be_valid
       end
     end
-    
+
     describe 'email' do
       it 'requires an email' do
         expect(FactoryGirl.build(:user, email: nil)).not_to be_valid
@@ -27,7 +27,7 @@ RSpec.describe User, :type => :model do
           FactoryGirl.build(:user, email: 'charliebrown@peanuts.com')
         ).not_to be_valid
       end
-      
+
       it 'requires a valid email' do
         expect(FactoryGirl.build(:user, email: 'invalid')).not_to be_valid
         expect(FactoryGirl.build(:user, email: 'inva@lid')).not_to be_valid
@@ -78,6 +78,12 @@ RSpec.describe User, :type => :model do
 
     it 'creates a session_token' do
       expect(user.session_token).not_to be_nil
+    end
+  end
+
+  describe 'associations' do
+    it 'has many projects' do
+      expect(User.reflect_on_association(:projects).macro).to eq :has_many
     end
   end
 
