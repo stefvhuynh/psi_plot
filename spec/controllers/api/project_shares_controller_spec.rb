@@ -1,8 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe Api::ProjectShareController, :type => :controller do
+RSpec.describe Api::ProjectSharesController, :type => :controller do
 
   let(:user) { FactoryGirl.create(:user) }
+  let(:project) { FactoryGirl.create(:project) }
 
   describe 'POST #create' do
     context 'signed in' do
@@ -11,7 +12,10 @@ RSpec.describe Api::ProjectShareController, :type => :controller do
       context 'with valid attributes' do
         before do
           post :create,
-            project_share: FactoryGirl.attributes_for(:project_share),
+            project_share: FactoryGirl.attributes_for(
+              :project_share,
+              project: project.id
+            ),
             format: :json
         end
 
@@ -22,12 +26,25 @@ RSpec.describe Api::ProjectShareController, :type => :controller do
         it 'creates and saves a project_share in the database' do
           expect {
             post :create,
-              project_share: FactoryGirl.attributes_for(:project_share),
+              project_share: FactoryGirl.attributes_for(
+                :project_share,
+                project: project.id
+              ),
               format: :json
           }.to change(ProjectShare, :count).by 1
         end
 
-        it 'only creates a project_share for a project the user owns'
+        it 'only creates a project_share for a project the user owns' do
+          other_project = FactoryGirl.create(:project, user_id: user.id + 1)
+          expect {
+            post :create,
+              project_share: FactoryGirl.attributes_for(
+                :project_share,
+                project_id: other_project.id
+              ),
+              format: :json
+          }.not_to change(ProjectShare, :count)
+        end
 
         it 'renders the project_share show template' do
           expect(response).to render_template :show

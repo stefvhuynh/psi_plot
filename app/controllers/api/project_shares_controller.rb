@@ -1,4 +1,4 @@
-class Api::ProjectShareController < ApplicationController
+class Api::ProjectSharesController < ApplicationController
 
   def create
     @project_share = ProjectShare.new(project_share_params)
