@@ -10,7 +10,7 @@ RSpec.describe Api::ProjectSharesController, :type => :controller do
       before { sign_in(user) }
 
       context 'with valid attributes' do
-        before do
+        before(run: true) do
           post :create,
             project_share: FactoryGirl.attributes_for(
               :project_share,
@@ -19,7 +19,7 @@ RSpec.describe Api::ProjectSharesController, :type => :controller do
             format: :json
         end
 
-        it 'responds with a 200 OK status' do
+        it 'responds with a 200 OK status', run: true do
           expect(response.status).to eq 200
         end
 
@@ -57,7 +57,7 @@ RSpec.describe Api::ProjectSharesController, :type => :controller do
           }.not_to change(ProjectShare, :count)
         end
 
-        it 'renders the project_share show template' do
+        it 'renders the project_share show template', run: true do
           expect(response).to render_template :show
         end
       end
