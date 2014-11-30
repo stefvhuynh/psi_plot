@@ -44,6 +44,22 @@ RSpec.describe ProjectShare, :type => :model do
         ).not_to be_valid
       end
     end
+
+    describe 'association validations' do
+      it 'requires the existence of the project' do
+        project = FactoryGirl.create(:project)
+        expect(
+          FactoryGirl.build(:project_share, project_id: project.id + 1)
+        ).not_to be_valid
+      end
+
+      it 'requires the existence of the user' do
+        user = FactoryGirl.create(:user)
+        expect(
+          FactoryGirl.build(:project_share, user_id: user.id + 1)
+        ).not_to be_valid
+      end
+    end
   end
 
   describe 'associations' do
