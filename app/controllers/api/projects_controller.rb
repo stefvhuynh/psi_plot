@@ -22,7 +22,8 @@ class Api::ProjectsController < ApplicationController
     if @project.save
       render :show, status: :ok
     else
-      render nothing: true, status: :unprocessable_entity
+      render json: { errors: @project.errors.full_messages },
+        status: :unprocessable_entity
     end
   end
 

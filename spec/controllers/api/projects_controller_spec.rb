@@ -129,10 +129,13 @@ RSpec.describe Api::ProjectsController, :type => :controller do
       end
 
       context 'with invalid attributes' do
-        it 'responds with a 422 unprocessable entity' do
+        before(run: true) do
           post :create,
             project: FactoryGirl.attributes_for(:invalid_project),
             format: :json
+        end
+
+        it 'responds with a 422 unprocessable entity', run: true do
           expect(response.status).to eq 422
         end
 
@@ -142,6 +145,10 @@ RSpec.describe Api::ProjectsController, :type => :controller do
               project: FactoryGirl.attributes_for(:invalid_project),
               format: :json
           }.not_to change(Project, :count)
+        end
+
+        it 'renders error messages', run: true do
+          expect(response.body).to include 'errors'
         end
       end
     end

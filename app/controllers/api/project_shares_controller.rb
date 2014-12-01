@@ -2,13 +2,16 @@ class Api::ProjectSharesController < ApplicationController
   before_filter :require_signed_in
 
   def create
-    if Project.exists?(id: params[:project_id], user_id: current_user.id)
+    project_id = params[:project_share][:project_id]
+
+    if Project.exists?(id: project_id, user_id: current_user.id)
       @project_share = ProjectShare.new(project_share_params)
 
       if @project_share.save
         render :show, status: :ok
       else
-        render nothing: true, status: :unprocessable_entity
+        render json: { errors: @project_share.errors.full_messages },
+          status: :unprocessable_entity
       end
     else
       render nothing: true, status: :not_found
