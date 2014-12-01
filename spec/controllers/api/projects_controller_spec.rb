@@ -89,6 +89,14 @@ RSpec.describe Api::ProjectsController, :type => :controller do
           format: :json
         expect(response.status).to eq 401
       end
+
+      it 'does not create a project in the database' do
+        expect {
+          post :create,
+            project: FactoryGirl.attributes_for(:project),
+            format: :json
+        }.not_to change(Project, :count)
+      end
     end
 
     context 'signed in' do
