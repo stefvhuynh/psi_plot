@@ -89,7 +89,10 @@ RSpec.describe Api::ProjectSharesController, :type => :controller do
       context 'with invalid attributes' do
         before(run: true) do
           post :create,
-            project_share: FactoryGirl.attributes_for(:invalid_project_share),
+            project_share: FactoryGirl.attributes_for(
+              :invalid_project_share,
+              project_id: project.id
+            ),
             format: :json
         end
 
@@ -112,18 +115,28 @@ RSpec.describe Api::ProjectSharesController, :type => :controller do
     end
 
     context 'signed out' do
-      before do
-        sign_out
+      before { sign_out }
+
+      it 'responds with a 401 Unauthorized' do
         post :create,
           project_share: build_attributes(
             :project_share,
-            project: project.id
+            project_id: project.id
           ),
           format: :json
+        expect(response.status).to eq 401
       end
 
-      it 'responds with a 401 Unauthorized'
-      it 'does not create a project_share in the database'
+      it 'does not create a project_share in the database' do
+        expect {
+          post :create,
+            project_share: build_attributes(
+              :project_share,
+              project_id: project.id
+            ),
+            format: :json
+        }.not_to change(ProjectShare, :count)
+      end
     end
   end
 
