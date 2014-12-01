@@ -12,10 +12,7 @@ RSpec.describe Api::ProjectSharesController, :type => :controller do
       context 'with valid attributes' do
         before(run: true) do
           post :create,
-            project_share: FactoryGirl.attributes_for(
-              :project_share,
-              project_id: project.id
-            ),
+            project_share: build_attributes(:project_share),
             format: :json
         end
 
@@ -26,20 +23,30 @@ RSpec.describe Api::ProjectSharesController, :type => :controller do
         it 'creates and saves a project_share in the database' do
           expect {
             post :create,
-              project_share: FactoryGirl.attributes_for(
-                :project_share,
-                project_id: project.id
-              ),
+              project_share: build_attributes(:project_share),
               format: :json
           }.to change(ProjectShare, :count).by 1
         end
 
         it 'only creates a project_share for a project that exists' do
+          project = FactoryGirl.create(:project)
           expect {
             post :create,
-              project_share: FactoryGirl.attributes_for(
+              project_share: build_attributes(
                 :project_share,
-                project_id: Project.last.id + 1
+                project_id: project.id + 1
+              ),
+              format: :json
+          }.not_to change(ProjectShare, :count)
+        end
+
+        it 'only creates a project_share for a user that exists' do
+          new_user = FactoryGirl.create(:user)
+          expect {
+            post :create,
+              project_share: build_attributes(
+                :project_share,
+                user_id: new_user.id + 1
               ),
               format: :json
           }.not_to change(ProjectShare, :count)
@@ -49,12 +56,23 @@ RSpec.describe Api::ProjectSharesController, :type => :controller do
           other_project = FactoryGirl.create(:project, user_id: user.id + 1)
           expect {
             post :create,
-              project_share: FactoryGirl.attributes_for(
+              project_share: build_attributes(
                 :project_share,
                 project_id: other_project.id
               ),
               format: :json
           }.not_to change(ProjectShare, :count)
+        end
+
+        it 'responds with a 404 Not Found if the user does not own the project' do
+          other_project = FactoryGirl.create(:project, user_id: user.id + 1)
+          post :create,
+            project_share: build_attributes(
+              :project_share,
+              project_id: other_project.id
+            ),
+            format: :json
+          expect(response.status).to eq 404
         end
 
         it 'renders the project_share show template', run: true do
@@ -65,7 +83,7 @@ RSpec.describe Api::ProjectSharesController, :type => :controller do
       context 'with invalid attributes' do
         before do
           post :create,
-            project_share: FactoryGirl.attributes_for(
+            project_share: build_attributes(
               :project_share,
               project_id: project.id
             ),
@@ -82,7 +100,7 @@ RSpec.describe Api::ProjectSharesController, :type => :controller do
       before do
         sign_out
         post :create,
-          project_share: FactoryGirl.attributes_for(
+          project_share: build_attributes(
             :project_share,
             project: project.id
           ),
