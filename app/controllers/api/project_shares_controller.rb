@@ -19,7 +19,18 @@ class Api::ProjectSharesController < ApplicationController
   end
 
   def destroy
-    render :show, status: :ok
+    @project_share = ProjectShare.find(params[:id])
+
+    if @project_share.project.user_id == current_user.id
+      if @project_share.destroy
+        render :show, status: :ok
+      else
+        render json: { errors: @project_share.errors.full_messages },
+          status: :unprocessable_entity
+      end
+    else
+      render nothing: true, status: :forbidden
+    end
   end
 
   private

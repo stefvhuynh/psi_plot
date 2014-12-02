@@ -4,10 +4,14 @@ RSpec.describe Api::ProjectSharesController, :type => :controller do
 
   let(:user) { FactoryGirl.create(:user) }
   let(:project) { FactoryGirl.create(:project, user_id: user.id) }
+  let(:project_share) do
+    FactoryGirl.create(:project_share, project_id: project.id)
+  end
 
   describe 'POST #create' do
     context 'signed in' do
       before { sign_in(user) }
+      after { sign_out }
 
       context 'with valid attributes' do
         before(run: true) do
@@ -142,11 +146,50 @@ RSpec.describe Api::ProjectSharesController, :type => :controller do
 
   describe 'DELETE #destory' do
     context 'signed in' do
+      before(run: true) do
+        sign_in(user)
+        delete :destroy, id: project_share, format: :json
+      end
 
+      after { sign_out }
+
+      it 'responds with a 200 OK status', run: true do
+        expect(response.status).to eq 200
+      end
+
+      it 'deletes the record if the user owns the project', run: true do
+        expect(project.project_shares).to eq []
+      end
+
+      it 'does not delete the record if the user does not own the project' do
+        sign_in(user)
+        other_user = FactoryGirl.create(:user)
+        other_project = FactoryGirl.create(:project, user_id: other_user.id)
+        other_project_share = FactoryGirl.create(
+          :project_share,
+          project_id: other_project.id
+        )
+
+        expect {
+          delete :destroy, id: other_project_share, format: :json
+        }.not_to change(ProjectShare, :count)
+        expect(response.status).to eq 403
+      end
     end
 
     context 'signed out' do
+      before do
+        sign_out
+        delete :destroy, id: project_share, format: :json
+      end
 
+      it 'responds with a 401 Unauthorized' do
+        expect(response.status).to eq 401
+      end
+
+      it 'does not delete the record' do
+        expect(ProjectShare.all).to include project_share
+      end
     end
   end
 
