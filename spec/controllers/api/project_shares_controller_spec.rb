@@ -9,18 +9,23 @@ RSpec.describe Api::ProjectSharesController, :type => :controller do
   end
 
   describe 'POST #create' do
+
+    def make_post_request(project_id)
+      post :create,
+        project_share: build_attributes(
+          :project_share,
+          project_id: project_id
+        ),
+        format: :json
+    end
+
     context 'signed in' do
       before { sign_in(user) }
       after { sign_out }
 
       context 'with valid attributes' do
         before(run: true) do
-          post :create,
-            project_share: build_attributes(
-              :project_share,
-              project_id: project.id
-            ),
-            format: :json
+          make_post_request(project.id)
         end
 
         it 'responds with a 200 OK status', run: true do
@@ -29,24 +34,14 @@ RSpec.describe Api::ProjectSharesController, :type => :controller do
 
         it 'creates and saves a project_share in the database' do
           expect {
-            post :create,
-              project_share: build_attributes(
-                :project_share,
-                project_id: project.id
-              ),
-              format: :json
+            make_post_request(project.id)
           }.to change(ProjectShare, :count).by 1
         end
 
         it 'only creates a project_share for a project that exists' do
           new_project = FactoryGirl.create(:project)
           expect {
-            post :create,
-              project_share: build_attributes(
-                :project_share,
-                project_id: new_project.id + 1
-              ),
-              format: :json
+            make_post_request(new_project.id + 1)
           }.not_to change(ProjectShare, :count)
         end
 
@@ -65,23 +60,13 @@ RSpec.describe Api::ProjectSharesController, :type => :controller do
         it 'only creates a project_share for a project the user owns' do
           other_project = FactoryGirl.create(:project, user_id: user.id + 1)
           expect {
-            post :create,
-              project_share: build_attributes(
-                :project_share,
-                project_id: other_project.id
-              ),
-              format: :json
+            make_post_request(other_project.id)
           }.not_to change(ProjectShare, :count)
         end
 
         it 'responds with a 404 Not Found if the user does not own the project' do
           other_project = FactoryGirl.create(:project, user_id: user.id + 1)
-          post :create,
-            project_share: build_attributes(
-              :project_share,
-              project_id: other_project.id
-            ),
-            format: :json
+          make_post_request(other_project.id)
           expect(response.status).to eq 404
         end
 
@@ -122,23 +107,13 @@ RSpec.describe Api::ProjectSharesController, :type => :controller do
       before { sign_out }
 
       it 'responds with a 401 Unauthorized' do
-        post :create,
-          project_share: build_attributes(
-            :project_share,
-            project_id: project.id
-          ),
-          format: :json
+        make_post_request(project.id)
         expect(response.status).to eq 401
       end
 
       it 'does not create a project_share in the database' do
         expect {
-          post :create,
-            project_share: build_attributes(
-              :project_share,
-              project_id: project.id
-            ),
-            format: :json
+          make_post_request(project.id)
         }.not_to change(ProjectShare, :count)
       end
     end
