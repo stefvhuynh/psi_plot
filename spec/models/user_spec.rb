@@ -85,6 +85,14 @@ RSpec.describe User, :type => :model do
     it 'has many projects' do
       expect(User.reflect_on_association(:projects).macro).to eq :has_many
     end
+
+    it 'has many project_shares' do
+      expect(User.reflect_on_association(:project_shares).macro).to eq :has_many
+    end
+
+    it 'has many shared_projects' do
+      expect(User.reflect_on_association(:shared_projects).macro).to eq :has_many
+    end
   end
 
   describe '::find_by_credentials' do

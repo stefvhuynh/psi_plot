@@ -42,7 +42,7 @@ RSpec.describe Api::UsersController, :type => :controller do
         }.not_to change(User, :count)
       end
 
-      it 'responds with error messages' do
+      it 'renders with error messages' do
         expect(response.body).to include 'errors'
       end
     end

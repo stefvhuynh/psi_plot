@@ -56,6 +56,14 @@ RSpec.describe Project, :type => :model do
     it 'belongs to a user' do
       expect(Project.reflect_on_association(:user).macro).to eq :belongs_to
     end
+
+    it 'has many project_shares' do
+      expect(Project.reflect_on_association(:project_shares).macro).to eq :has_many
+    end
+
+    it 'has many shared_users' do
+      expect(Project.reflect_on_association(:shared_users).macro).to eq :has_many
+    end
   end
 
 end
