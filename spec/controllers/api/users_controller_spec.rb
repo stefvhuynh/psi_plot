@@ -8,6 +8,12 @@ RSpec.describe Api::UsersController, :type => :controller do
       post :create, user: FactoryGirl.attributes_for(:user), format: :json
     end
 
+    def make_post_request_with_invalid_attrs
+      post :create,
+        user: FactoryGirl.attributes_for(:invalid_user),
+        format: :json
+    end
+
     context 'with valid attributes' do
       before(run: true) { make_post_request_with_valid_attrs }
 
@@ -27,13 +33,6 @@ RSpec.describe Api::UsersController, :type => :controller do
     end
 
     context 'with invalid attributes' do
-
-      def make_post_request_with_invalid_attrs
-        post :create,
-          user: FactoryGirl.attributes_for(:invalid_user),
-          format: :json
-      end
-
       before(run: true) { make_post_request_with_invalid_attrs }
 
       it 'responds with a 422 Unprocessable Entity', run: true do
