@@ -2,7 +2,13 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :null_session
 
   helper_method :current_user, :signed_in?
+  
+  after_filter :set_csrf_cookie_for_ng
 
+  def set_csrf_cookie_for_ng
+    cookies['XSRF-TOKEN'] = form_authenticity_token if protect_against_forgery?
+  end
+  
   def sign_in!(user)
     session[:token] = user.reset_session_token!
     @current_user = user
