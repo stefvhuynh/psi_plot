@@ -5,10 +5,10 @@ RSpec.describe Api::SessionsController, :type => :controller do
   describe 'POST #create' do
     context 'with valid attributes' do
       let(:user_credentials) do
-        { 
-          first_name: 'Charlie', 
-          last_name: 'Brown', 
-          email: 'charliebrown@peanuts.com', 
+        {
+          first_name: 'Charlie',
+          last_name: 'Brown',
+          email: 'charliebrown@peanuts.com',
           password: '123abc'
         }
       end
@@ -17,15 +17,15 @@ RSpec.describe Api::SessionsController, :type => :controller do
         FactoryGirl.create(:user, user_credentials)
       end
 
-      before do
+      before(run: true) do
         post :create, session: user_credentials, format: :json
       end
 
-      it 'responds with a 200 OK' do
+      it 'responds with a 200 OK', run: true do
         expect(response.status).to eq 200
       end
 
-      it 'fetches the correct user' do
+      it 'fetches the correct user', run: true do
         expect(assigns(:user)).to eq user
       end
 
@@ -34,7 +34,7 @@ RSpec.describe Api::SessionsController, :type => :controller do
         post :create, session: user_credentials, format: :json
       end
 
-      it 'renders the session show template' do
+      it 'renders the session show template', run: true do
         expect(response).to render_template :show
       end
     end

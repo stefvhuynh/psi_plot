@@ -14,7 +14,7 @@
 //= require jquery_ujs
 //= require ./angular/angular.min
 //= require_tree ./angular
-//= require ./psiplotapp
+//= require ./psiPlotApp
 //= require angular-rails-templates
 //= require Chart
 //= require_tree .
