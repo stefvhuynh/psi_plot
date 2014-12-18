@@ -18,8 +18,8 @@
 /* RESETS */
 
 html, head, body, h1, h2, h3, h4, a, img, span, div,
-form, input, button,
-header, footer, main, section, article, menu, menuitem {
+form, input, button, header, footer, main, section,
+article, menu, menuitem {
   margin: 0;
   padding: 0;
   border: 0;
@@ -59,22 +59,11 @@ input[type="submit"] {
 
 /* CLEAR FIX */
 
-.group:after {
+.clear-fix:after {
   content: "";
   display: block;
   clear: both;
 }
 
-
 /* STYLES */
 
-
-h1 {
-  font-size: 40px;
-  padding: 20px;
-}
-
-h2 {
-  font-size: 30px;
-  padding: 10px;
-}

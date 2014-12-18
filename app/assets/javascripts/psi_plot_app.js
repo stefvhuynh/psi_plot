@@ -1,5 +1,6 @@
 var PsiPlotApp = angular.module('PsiPlotApp', [
   'ngRoute',
+  'ngResource',
   'templates'
 ]);
 
