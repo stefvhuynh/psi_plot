@@ -11,9 +11,9 @@ PsiPlotApp.config(['$routeProvider',
         templateUrl: 'index.html',
         controller: 'HomeCtrl'
       })
-      .when('/index', {
-        templateUrl: 'collections/index.html',
-        controller: 'CollectionIndexCtrl'
+      .when('/projects', {
+        templateUrl: 'projects/list.html',
+        controller: 'ProjectsListCtrl'
       });
 
   }
