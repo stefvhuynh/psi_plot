@@ -12,9 +12,9 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require ./angular/angular.min
-//= require_tree ./angular
-//= require ./psiPlotApp
+//= require angular
+//= require angular-route
 //= require angular-rails-templates
 //= require Chart
+//= require ./psiPlotApp
 //= require_tree .
