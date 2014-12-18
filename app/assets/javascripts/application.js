@@ -16,5 +16,6 @@
 //= require angular-route
 //= require angular-rails-templates
 //= require Chart
-//= require ./psiPlotApp
+//
+//= require ./psi_plot_app
 //= require_tree .

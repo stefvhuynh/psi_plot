@@ -1,3 +1,5 @@
-PsiPlotApp.controller('HomeCtrl', ['$scope', function($scope) {
+PsiPlotApp.controller('HomeCtrl', ['$scope',
+  function($scope) {
 
-}]);
+  }
+]);
