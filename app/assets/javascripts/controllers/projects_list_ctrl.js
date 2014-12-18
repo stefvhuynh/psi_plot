@@ -1,7 +1,7 @@
 PsiPlotApp.controller('ProjectsListCtrl', ['$scope',
   function($scope) {
 
-    $scope.collections = [
+    $scope.projects = [
       { title: "Example 1",
         content: "First example" },
       { title: "Example 2",
