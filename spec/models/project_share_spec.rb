@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe ProjectShare, :type => :model do
-
   describe 'model validations' do
     describe 'project_id' do
       it 'requires a project_id' do
@@ -73,5 +72,4 @@ RSpec.describe ProjectShare, :type => :model do
       expect(ProjectShare.reflect_on_association(:user).macro).to eq :belongs_to
     end
   end
-
 end

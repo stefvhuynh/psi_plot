@@ -63,5 +63,9 @@ RSpec.describe Project, :type => :model do
     it 'has many shared_users' do
       expect(Project.reflect_on_association(:shared_users).macro).to eq :has_many
     end
+
+    it 'has many two_way_plots' do
+      expect(Project.reflect_on_association(:two_way_plots).macro).to eq :has_many
+    end
   end
 end
