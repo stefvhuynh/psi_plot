@@ -38,5 +38,4 @@ class Api::ProjectSharesController < ApplicationController
   def project_share_params
     params.require(:project_share).permit(:project_id, :user_id)
   end
-
 end

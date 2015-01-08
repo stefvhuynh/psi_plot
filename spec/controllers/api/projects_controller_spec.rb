@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe Api::ProjectsController, :type => :controller do
-
   let(:user) { FactoryGirl.create(:user) }
   let!(:projects) { FactoryGirl.create_list(:project, 5, user_id: user.id) }
 
@@ -305,5 +304,4 @@ RSpec.describe Api::ProjectsController, :type => :controller do
       end
     end
   end
-
 end
