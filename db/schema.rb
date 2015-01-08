@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141129213133) do
+ActiveRecord::Schema.define(version: 20150108061520) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,6 +36,28 @@ ActiveRecord::Schema.define(version: 20141129213133) do
 
   add_index "projects", ["name"], name: "index_projects_on_name", using: :btree
   add_index "projects", ["user_id"], name: "index_projects_on_user_id", using: :btree
+
+  create_table "two_way_plots", force: true do |t|
+    t.string   "title",                   null: false
+    t.string   "independent_name",        null: false
+    t.string   "moderator_name",          null: false
+    t.string   "dependent_name",          null: false
+    t.decimal  "independent_coefficient", null: false
+    t.decimal  "moderator_coefficient",   null: false
+    t.decimal  "interaction_coefficient", null: false
+    t.decimal  "intercept",               null: false
+    t.decimal  "independent_mean",        null: false
+    t.decimal  "independent_sd",          null: false
+    t.decimal  "moderator_mean",          null: false
+    t.decimal  "moderator_sd",            null: false
+    t.integer  "order",                   null: false
+    t.integer  "project_id",              null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "two_way_plots", ["order", "project_id"], name: "index_two_way_plots_on_order_and_project_id", unique: true, using: :btree
+  add_index "two_way_plots", ["title"], name: "index_two_way_plots_on_title", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "first_name",      null: false

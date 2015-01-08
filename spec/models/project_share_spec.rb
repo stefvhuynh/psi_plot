@@ -56,7 +56,7 @@ RSpec.describe ProjectShare, :type => :model do
       it 'requires the existence of the user' do
         user = FactoryGirl.create(:user)
         expect(
-          FactoryGirl.build(:project_share, user_id: user.id + 1)
+          FactoryGirl.build(:project_share, user_id: user.id + 2)
         ).not_to be_valid
       end
     end

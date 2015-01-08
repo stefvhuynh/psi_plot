@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe Project, :type => :model do
-
   describe 'model validations' do
     describe 'name' do
       it 'requires a name' do
@@ -65,5 +64,4 @@ RSpec.describe Project, :type => :model do
       expect(Project.reflect_on_association(:shared_users).macro).to eq :has_many
     end
   end
-
 end

@@ -139,5 +139,4 @@ RSpec.describe User, :type => :model do
       expect(user.session_token).not_to eq old_token
     end
   end
-
 end
