@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe Api::SessionsController, :type => :controller do
-
   describe 'POST #create' do
     context 'with valid attributes' do
       let(:user_credentials) do
@@ -66,5 +65,4 @@ RSpec.describe Api::SessionsController, :type => :controller do
       delete :destroy
     end
   end
-
 end

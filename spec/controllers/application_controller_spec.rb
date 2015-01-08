@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe ApplicationController, :type => :controller do
-
   context 'authentication' do
     let(:user) { double 'user' }
     let(:token) { '123abc' }
@@ -63,5 +62,4 @@ RSpec.describe ApplicationController, :type => :controller do
       end
     end
   end
-
 end

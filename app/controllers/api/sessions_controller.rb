@@ -1,5 +1,4 @@
 class Api::SessionsController < ApplicationController
-
   def create
     @user = User.find_by_credentials(
       params[:session][:email],
@@ -18,5 +17,4 @@ class Api::SessionsController < ApplicationController
     sign_out!
     render nothing: true, status: :ok
   end
-
 end

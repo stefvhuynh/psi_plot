@@ -35,5 +35,4 @@ class ApplicationController < ActionController::Base
   def require_signed_in
     render nothing: true, status: :unauthorized unless signed_in?
   end
-
 end

@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe Api::ProjectSharesController, :type => :controller do
-
   let(:user) { FactoryGirl.create(:user) }
   let(:project) { FactoryGirl.create(:project, user_id: user.id) }
   let(:project_share) do
@@ -172,5 +171,4 @@ RSpec.describe Api::ProjectSharesController, :type => :controller do
       end
     end
   end
-
 end

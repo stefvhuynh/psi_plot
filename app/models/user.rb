@@ -1,5 +1,4 @@
 class User < ActiveRecord::Base
-
   has_many :projects
   has_many :project_shares
   has_many :shared_projects, through: :project_shares
@@ -43,5 +42,4 @@ class User < ActiveRecord::Base
       errors.add(:email, 'is not in a valid format')
     end
   end
-
 end

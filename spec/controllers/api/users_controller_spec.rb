@@ -1,9 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Api::UsersController, :type => :controller do
-
   describe 'POST #create' do
-
     def make_post_request_with_valid_attrs
       post :create, user: FactoryGirl.attributes_for(:user), format: :json
     end
@@ -50,5 +48,4 @@ RSpec.describe Api::UsersController, :type => :controller do
       end
     end
   end
-
 end
