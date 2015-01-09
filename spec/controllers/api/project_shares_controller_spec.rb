@@ -8,7 +8,6 @@ RSpec.describe Api::ProjectSharesController, :type => :controller do
   end
 
   describe 'POST #create' do
-
     def make_post_request_with_valid_attrs(attrs)
       post :create,
         project_share: build_attributes(
@@ -119,7 +118,6 @@ RSpec.describe Api::ProjectSharesController, :type => :controller do
   end
 
   describe 'DELETE #destory' do
-
     def make_delete_request(project_share)
       delete :destroy, id: project_share, format: :json
     end

@@ -46,7 +46,6 @@ RSpec.describe Api::ProjectsController, :type => :controller do
   end
 
   describe 'GET #show' do
-
     def make_get_request(project)
       get :show, id: project, format: :json
     end
@@ -93,7 +92,6 @@ RSpec.describe Api::ProjectsController, :type => :controller do
   end
 
   describe 'POST #create' do
-
     def make_post_request_with_valid_attrs(user_id)
       post :create,
         project: FactoryGirl.attributes_for(:project, user_id: user_id),
@@ -256,7 +254,6 @@ RSpec.describe Api::ProjectsController, :type => :controller do
   end
 
   describe 'DELETE #destroy' do
-
     def make_delete_request(project)
       delete :destroy, id: project, format: :json
     end
