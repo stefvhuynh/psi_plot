@@ -3,9 +3,9 @@
 FactoryGirl.define do
   factory :two_way_plot do
     title { Faker::Company.catch_phrase }
-    independent_name { Faker::Hacker.noun }
-    moderator_name { Faker::Hacker.noun }
-    dependent_name { Faker::Hacker.noun }
+    independent_variable { Faker::Hacker.noun }
+    moderator_variable { Faker::Hacker.noun }
+    dependent_variable { Faker::Hacker.noun }
     independent_coefficient { rand }
     moderator_coefficient { rand }
     interaction_coefficient { rand }

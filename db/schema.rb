@@ -39,9 +39,9 @@ ActiveRecord::Schema.define(version: 20150108061520) do
 
   create_table "two_way_plots", force: true do |t|
     t.string   "title",                   null: false
-    t.string   "independent_name",        null: false
-    t.string   "moderator_name",          null: false
-    t.string   "dependent_name",          null: false
+    t.string   "independent_variable",    null: false
+    t.string   "moderator_variable",      null: false
+    t.string   "dependent_variable",      null: false
     t.decimal  "independent_coefficient", null: false
     t.decimal  "moderator_coefficient",   null: false
     t.decimal  "interaction_coefficient", null: false
