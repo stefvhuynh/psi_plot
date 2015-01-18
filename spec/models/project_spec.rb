@@ -57,15 +57,31 @@ RSpec.describe Project, :type => :model do
     end
 
     it 'has many project_shares' do
-      expect(Project.reflect_on_association(:project_shares).macro).to eq :has_many
+      expect(
+        Project.reflect_on_association(:project_shares).macro
+      ).to eq :has_many
     end
 
     it 'has many shared_users' do
-      expect(Project.reflect_on_association(:shared_users).macro).to eq :has_many
+      expect(
+        Project.reflect_on_association(:shared_users).macro
+      ).to eq :has_many
     end
 
     it 'has many two_way_plots' do
-      expect(Project.reflect_on_association(:two_way_plots).macro).to eq :has_many
+      expect(
+        Project.reflect_on_association(:two_way_plots).macro
+      ).to eq :has_many
+    end
+
+    describe '#all_plots' do
+      it 'fetches all the plots associated with a project' do
+        project = FactoryGirl.create(:project)
+        two_way_plot = FactoryGirl.create(:two_way_plot, project_id: project.id)
+        expect(
+          project.all_plots
+        ).to eq [two_way_plot]
+      end
     end
   end
 end

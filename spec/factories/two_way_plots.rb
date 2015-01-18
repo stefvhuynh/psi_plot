@@ -20,7 +20,7 @@ FactoryGirl.define do
     project
   end
 
-  factory :invalid_two_way_plot, parent: :two_way_plot do
+  factory :invalid_two_way_plot, class: 'TwoWayPlot' do
     title nil
     independent_name nil
     moderator_name nil

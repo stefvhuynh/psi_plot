@@ -10,7 +10,7 @@ FactoryGirl.define do
     end
   end
 
-  factory :invalid_project, parent: :project do
+  factory :invalid_project, class: 'Project' do
     name nil
     description nil
     user_id nil

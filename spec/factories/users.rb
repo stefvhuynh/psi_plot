@@ -8,7 +8,7 @@ FactoryGirl.define do
     password { Faker::Internet.password(6) }
   end
 
-  factory :invalid_user, parent: :user do
+  factory :invalid_user, class: 'User' do
     first_name nil
     last_name nil
     email nil

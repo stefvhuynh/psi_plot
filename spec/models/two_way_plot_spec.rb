@@ -8,18 +8,18 @@ RSpec.describe TwoWayPlot, :type => :model do
       end
     end
 
-    describe 'independent_name' do
-      it 'requires an independent_name' do
+    describe 'independent_variable' do
+      it 'requires an independent_variable' do
         expect(
-          FactoryGirl.build(:two_way_plot, independent_name: nil)
+          FactoryGirl.build(:two_way_plot, independent_variable: nil)
         ).not_to be_valid
       end
     end
 
-    describe 'moderator_name' do
-      it 'requires a moderator_name' do
+    describe 'moderator_variable' do
+      it 'requires a moderator_variable' do
         expect(
-          FactoryGirl.build(:two_way_plot, moderator_name: nil)
+          FactoryGirl.build(:two_way_plot, moderator_variable: nil)
         ).not_to be_valid
       end
     end

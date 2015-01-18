@@ -6,7 +6,7 @@ FactoryGirl.define do
     user
   end
 
-  factory :invalid_project_share, parent: :project_share do
+  factory :invalid_project_share, class: 'ProjectShare' do
     project_id nil
     user_id nil
   end
