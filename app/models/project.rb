@@ -4,11 +4,11 @@ class Project < ActiveRecord::Base
   has_many :two_way_plots
   has_many :shared_users, through: :project_shares
 
-  validates :name, :order, :user_id, presence: true
+  validates :name, :order, :user, presence: true
   validates :order, uniqueness: { scope: :user_id }
   validates :description, length: { maximum: 150 }
 
   def all_plots
-    two_way_plots
+    two_way_plots.order(:order)
   end
 end

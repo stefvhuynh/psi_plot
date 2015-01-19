@@ -14,8 +14,13 @@ RSpec.describe Project, :type => :model do
       end
 
       it 'requires the orders to be unique for each set of user projects' do
-        project1 = FactoryGirl.create(:project, user_id: 1)
-        project2 = FactoryGirl.build(:project, user_id: 1, order: project1.order)
+        user = FactoryGirl.create(:user)
+        project1 = FactoryGirl.create(:project, user: user)
+        project2 = FactoryGirl.build(
+          :project,
+          user: user,
+          order: project1.order
+        )
         expect(project2).not_to be_valid
 
         project2.order = project1.order + 1
@@ -23,8 +28,15 @@ RSpec.describe Project, :type => :model do
       end
 
       it 'does not enforce the uniquness requirement across users' do
-        project1 = FactoryGirl.create(:project, user_id: 1)
-        project2 = FactoryGirl.build(:project, user_id: 2, order: project1.order)
+        user = FactoryGirl.create(:user)
+        user2 = FactoryGirl.create(:user)
+        project1 = FactoryGirl.create(:project, user: user)
+        project2 = FactoryGirl.build(
+          :project,
+          user: user2,
+          order: project1.order
+        )
+
         expect(project2).to be_valid
       end
     end
@@ -75,12 +87,22 @@ RSpec.describe Project, :type => :model do
     end
 
     describe '#all_plots' do
-      it 'fetches all the plots associated with a project' do
+      it 'fetches all plots in the correct order' do
         project = FactoryGirl.create(:project)
-        two_way_plot = FactoryGirl.create(:two_way_plot, project_id: project.id)
+        two_way_plot1 = FactoryGirl.create(
+          :two_way_plot,
+          project_id: project.id,
+          order: 2
+        )
+        two_way_plot2 = FactoryGirl.create(
+          :two_way_plot,
+          project_id: project.id,
+          order: 1
+        )
+
         expect(
           project.all_plots
-        ).to eq [two_way_plot]
+        ).to eq [two_way_plot2, two_way_plot1]
       end
     end
   end

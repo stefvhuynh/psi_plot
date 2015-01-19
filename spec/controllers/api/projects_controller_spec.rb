@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Api::ProjectsController, :type => :controller do
   let(:user) { FactoryGirl.create(:user) }
-  let!(:projects) { FactoryGirl.create_list(:project, 5, user_id: user.id) }
+  let!(:projects) { FactoryGirl.create_list(:project, 5, user: user) }
 
   describe 'GET #index' do
     context 'when signed out' do
@@ -30,13 +30,13 @@ RSpec.describe Api::ProjectsController, :type => :controller do
       end
 
       it 'does not fetch the projects for other users' do
-        user2 = FactoryGirl.create(:user)
-        user2_projects = FactoryGirl.create_list(:project, 5, user_id: user2.id)
+        other_user = FactoryGirl.create(:user)
+        other_projects = FactoryGirl.create_list(:project, 5, user: other_user)
 
         sign_in(user)
         get :index, format: :json
 
-        expect(assigns(:projects)).not_to include user2_projects
+        expect(assigns(:projects)).not_to include other_projects
       end
 
       it 'renders the index template', run: true do
@@ -75,14 +75,14 @@ RSpec.describe Api::ProjectsController, :type => :controller do
       end
 
       it 'does not fetch projects from other users' do
-        user2 = FactoryGirl.create(:user)
-        user2_project = FactoryGirl.create(:project, user_id: user2.id)
+        other_user = FactoryGirl.create(:user)
+        other_project = FactoryGirl.create(:project, user: other_user)
 
         sign_in(user)
-        make_get_request(user2_project)
+        make_get_request(other_project)
 
         expect(response.status).to eq 403
-        expect(assigns(:project)).not_to eq user2_project
+        expect(assigns(:project)).not_to eq other_project
       end
 
       it 'renders the show template', run: true do
@@ -92,9 +92,9 @@ RSpec.describe Api::ProjectsController, :type => :controller do
   end
 
   describe 'POST #create' do
-    def make_post_request_with_valid_attrs(user_id)
+    def make_post_request_with_valid_attrs(user)
       post :create,
-        project: FactoryGirl.attributes_for(:project, user_id: user_id),
+        project: FactoryGirl.attributes_for(:project, user: user),
         format: :json
     end
 
@@ -135,10 +135,10 @@ RSpec.describe Api::ProjectsController, :type => :controller do
         end
 
         it 'does not create a project for a different user' do
-          user2 = FactoryGirl.create(:user)
+          other_user = FactoryGirl.create(:user)
           expect {
-            make_post_request_with_valid_attrs(user2.id)
-          }.not_to change(user2.projects, :count)
+            make_post_request_with_valid_attrs(other_user.id)
+          }.not_to change(other_user.projects, :count)
         end
 
         it 'renders the show template', run: true do
@@ -170,7 +170,7 @@ RSpec.describe Api::ProjectsController, :type => :controller do
     let(:old_project_name) { Faker::App.name }
     let(:new_project_name) { "#{old_project_name} v.2.0" }
     let(:project) do
-      FactoryGirl.create(:project, name: old_project_name, user_id: user.id)
+      FactoryGirl.create(:project, name: old_project_name, user: user)
     end
 
     def make_put_request_with_valid_attrs(project_id, attrs)
@@ -184,7 +184,7 @@ RSpec.describe Api::ProjectsController, :type => :controller do
       put :update,
         id: project.id,
         project: FactoryGirl.attributes_for(
-          :invalid_project, user_id: user.id
+          :invalid_project, user: user
         ),
         format: :json
     end
@@ -229,13 +229,16 @@ RSpec.describe Api::ProjectsController, :type => :controller do
         end
 
         it 'does not allow the updating of a non-owned project' do
-          user2 = FactoryGirl.create(:project)
-          project2 = FactoryGirl.create(:project, user_id: user2.id)
+          other_user = FactoryGirl.create(:user)
+          other_project = FactoryGirl.create(:project, user: other_user)
 
-          make_put_request_with_valid_attrs(project2.id, name: "#{project2.name} v.2.0")
+          make_put_request_with_valid_attrs(
+            other_project.id,
+            name: "#{other_project.name} v.2.0"
+          )
 
           expect(response.status).to eq 404
-          expect(project2.reload.name).to eq project2.name
+          expect(other_project.reload.name).to eq other_project.name
         end
       end
 
@@ -290,14 +293,14 @@ RSpec.describe Api::ProjectsController, :type => :controller do
       end
 
       it 'does not delete the record if the user does not own it' do
-        user2 = FactoryGirl.create(:user)
-        user2_project = FactoryGirl.create(:project, user_id: user2.id)
+        other_user = FactoryGirl.create(:user)
+        other_project = FactoryGirl.create(:project, user: other_user)
 
         sign_in(user)
-        make_delete_request(user2_project)
+        make_delete_request(other_project)
 
         expect(response.status).to eq 404
-        expect(Project.all).to include user2_project
+        expect(Project.all).to include other_project
       end
     end
   end

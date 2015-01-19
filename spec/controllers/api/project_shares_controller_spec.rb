@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Api::ProjectSharesController, :type => :controller do
   let(:user) { FactoryGirl.create(:user) }
-  let(:project) { FactoryGirl.create(:project, user_id: user.id) }
+  let(:project) { FactoryGirl.create(:project, user: user) }
   let(:project_share) do
     FactoryGirl.create(:project_share, project_id: project.id)
   end
@@ -63,14 +63,16 @@ RSpec.describe Api::ProjectSharesController, :type => :controller do
         end
 
         it 'only creates a project_share for a project the user owns' do
-          other_project = FactoryGirl.create(:project, user_id: user.id + 1)
+          other_user = FactoryGirl.create(:user)
+          other_project = FactoryGirl.create(:project, user: other_user)
           expect {
             make_post_request_with_valid_attrs(project_id: other_project.id)
           }.not_to change(ProjectShare, :count)
         end
 
         it 'responds with a 404 Not Found if the user does not own the project' do
-          other_project = FactoryGirl.create(:project, user_id: user.id + 1)
+          other_user = FactoryGirl.create(:user)
+          other_project = FactoryGirl.create(:project, user: other_user)
           make_post_request_with_valid_attrs(project_id: other_project.id)
           expect(response.status).to eq 404
         end
@@ -141,7 +143,7 @@ RSpec.describe Api::ProjectSharesController, :type => :controller do
       it 'does not delete the record if the user does not own the project' do
         sign_in(user)
         other_user = FactoryGirl.create(:user)
-        other_project = FactoryGirl.create(:project, user_id: other_user.id)
+        other_project = FactoryGirl.create(:project, user: other_user)
         other_project_share = FactoryGirl.create(
           :project_share,
           project_id: other_project.id
