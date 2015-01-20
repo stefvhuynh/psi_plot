@@ -94,7 +94,7 @@ RSpec.describe Api::ProjectsController, :type => :controller do
   describe 'POST #create' do
     def make_post_request_with_valid_attrs(user)
       post :create,
-        project: FactoryGirl.attributes_for(:project, user: user),
+        project: FactoryGirl.attributes_for(:project, user_id: user.id),
         format: :json
     end
 
@@ -106,13 +106,13 @@ RSpec.describe Api::ProjectsController, :type => :controller do
 
     context 'signed out' do
       it 'responds with a 401 unauthorized' do
-        make_post_request_with_valid_attrs(user.id)
+        make_post_request_with_valid_attrs(user)
         expect(response.status).to eq 401
       end
 
       it 'does not create a project in the database' do
         expect {
-          make_post_request_with_valid_attrs(user.id)
+          make_post_request_with_valid_attrs(user)
         }.not_to change(Project, :count)
       end
     end
@@ -122,7 +122,7 @@ RSpec.describe Api::ProjectsController, :type => :controller do
       after { sign_out }
 
       context 'with valid attributes' do
-        before(run: true) { make_post_request_with_valid_attrs(user.id) }
+        before(run: true) { make_post_request_with_valid_attrs(user) }
 
         it 'responds with a 200 OK', run: true do
           expect(response.status).to eq 200
@@ -130,14 +130,14 @@ RSpec.describe Api::ProjectsController, :type => :controller do
 
         it 'creates a project for the signed in user' do
           expect {
-            make_post_request_with_valid_attrs(user.id)
+            make_post_request_with_valid_attrs(user)
           }.to change(user.projects, :count).by 1
         end
 
         it 'does not create a project for a different user' do
           other_user = FactoryGirl.create(:user)
           expect {
-            make_post_request_with_valid_attrs(other_user.id)
+            make_post_request_with_valid_attrs(other_user)
           }.not_to change(other_user.projects, :count)
         end
 
