@@ -47,7 +47,7 @@ RSpec.describe Api::ProjectsController, :type => :controller do
 
   describe 'GET #show' do
     def make_get_request(project)
-      get :show, id: project, format: :json
+      get :show, id: project.id, format: :json
     end
 
     context 'when signed out' do
@@ -105,7 +105,7 @@ RSpec.describe Api::ProjectsController, :type => :controller do
     end
 
     context 'signed out' do
-      it 'responds with a 401 unauthorized' do
+      it 'responds with a 401 Unauthorized' do
         make_post_request_with_valid_attrs(user)
         expect(response.status).to eq 401
       end
@@ -149,7 +149,7 @@ RSpec.describe Api::ProjectsController, :type => :controller do
       context 'with invalid attributes' do
         before(run: true) { make_post_request_with_invalid_attrs }
 
-        it 'responds with a 422 unprocessable entity', run: true do
+        it 'responds with a 422 Unprocessable Entity', run: true do
           expect(response.status).to eq 422
         end
 

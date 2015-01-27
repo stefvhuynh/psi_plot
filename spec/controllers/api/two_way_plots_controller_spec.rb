@@ -7,13 +7,19 @@ RSpec.describe Api::TwoWayPlotsController, :type => :controller do
   describe 'POST #create' do
     def make_post_request_with_valid_attrs(project)
       post :create,
-        two_way_plot: FactoryGirl.attributes_for(:two_way_plot, project_id: project.id),
+        two_way_plot: FactoryGirl.attributes_for(
+          :two_way_plot,
+          project_id: project.id
+        ),
         format: :json
     end
 
-    def make_post_request_with_invalid_attrs
+    def make_post_request_with_invalid_attrs(project)
       post :create,
-        two_way_plot: FactoryGirl.attributes_for(:invalid_two_way_plot),
+        two_way_plot: FactoryGirl.attributes_for(
+          :invalid_two_way_plot,
+          project_id: project.id
+        ),
         format: :json
     end
 
@@ -68,12 +74,26 @@ RSpec.describe Api::TwoWayPlotsController, :type => :controller do
       end
 
       context 'with invalid attributes' do
-        before(run: true) { make_post_request_with_invalid_attrs }
+        before(run: true) { make_post_request_with_invalid_attrs(project) }
 
-        it 'responds with a 422 unprocessable entity', run: true do
+        it 'responds with a 422 Unprocessable Entity', run: true do
           expect(response.status).to eq 422
+        end
+
+        it 'does not create a two_way_plot in the database' do
+          expect {
+            make_post_request_with_invalid_attrs(project)
+          }.not_to change(TwoWayPlot, :count)
+        end
+
+        it 'renders with error messages', run: true do
+          expect(response.body).to include 'errors'
         end
       end
     end
+  end
+
+  describe 'DELETE #destroy' do
+
   end
 end
