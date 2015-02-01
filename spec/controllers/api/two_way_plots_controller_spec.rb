@@ -94,6 +94,57 @@ RSpec.describe Api::TwoWayPlotsController, :type => :controller do
   end
 
   describe 'DELETE #destroy' do
+    let(:two_way_plot) { FactoryGirl.create(:two_way_plot, project: project) }
 
+    def make_delete_request(two_way_plot)
+      delete :destroy, id: two_way_plot, format: :json
+    end
+
+    context 'signed in' do
+      before(run: true) do
+        sign_in(user)
+        make_delete_request(two_way_plot)
+      end
+
+      after { sign_out }
+
+      it 'responds with a 200 OK status', run: true do
+        expect(response.status).to eq 200
+      end
+
+      it 'deletes the record if the user owns the two_way_plot', run: true do
+        expect(project.two_way_plots).to eq []
+      end
+
+      it 'does not delete the record if the user does not own the two_way_plot' do
+        other_user = FactoryGirl.create(:user)
+        other_project = FactoryGirl.create(:project, user: other_user)
+        other_two_way_plot = FactoryGirl.create(
+          :two_way_plot,
+          project: other_project
+        )
+        sign_in(user)
+
+        expect {
+          make_delete_request(other_two_way_plot)
+        }.not_to change(TwoWayPlot, :count)
+        expect(response.status).to eq 403
+      end
+    end
+
+    context 'signed out' do
+      before do
+        sign_out
+        make_delete_request(two_way_plot)
+      end
+
+      it 'responds with a 401 Unauthorized' do
+        expect(response.status).to eq 401
+      end
+
+      it 'does not delete the record' do
+        expect(TwoWayPlot.all).to include two_way_plot
+      end
+    end
   end
 end

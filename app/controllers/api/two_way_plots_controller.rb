@@ -18,6 +18,20 @@ class Api::TwoWayPlotsController < ApplicationController
     end
   end
 
+  def destroy
+    @two_way_plot = TwoWayPlot.find_by(id: params[:id])
+
+    if @two_way_plot.project.user_id == current_user.id
+      if @two_way_plot.destroy
+        render :show, status: :ok
+      else
+        render nothing: true, status: :unprocessable_entity
+      end
+    else
+      render nothing: true, status: :forbidden
+    end
+  end
+
   private
 
   def two_way_plot_params

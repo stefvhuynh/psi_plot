@@ -4,7 +4,7 @@ RSpec.describe Api::ProjectSharesController, :type => :controller do
   let(:user) { FactoryGirl.create(:user) }
   let(:project) { FactoryGirl.create(:project, user: user) }
   let(:project_share) do
-    FactoryGirl.create(:project_share, project_id: project.id)
+    FactoryGirl.create(:project_share, project: project)
   end
 
   describe 'POST #create' do
@@ -32,7 +32,7 @@ RSpec.describe Api::ProjectSharesController, :type => :controller do
 
       context 'with valid attributes' do
         before(run: true) do
-          make_post_request_with_valid_attrs(project_id: project.id)
+          make_post_request_with_valid_attrs(project: project)
         end
 
         it 'responds with a 200 OK status', run: true do
@@ -41,7 +41,7 @@ RSpec.describe Api::ProjectSharesController, :type => :controller do
 
         it 'creates and saves a project_share in the database' do
           expect {
-            make_post_request_with_valid_attrs(project_id: project.id)
+            make_post_request_with_valid_attrs(project: project)
           }.to change(ProjectShare, :count).by 1
         end
 
@@ -56,7 +56,7 @@ RSpec.describe Api::ProjectSharesController, :type => :controller do
           new_user = FactoryGirl.create(:user)
           expect {
             make_post_request_with_valid_attrs(
-              project_id: project.id,
+              project: project,
               user_id: new_user.id + 1
             )
           }.not_to change(ProjectShare, :count)
@@ -66,14 +66,14 @@ RSpec.describe Api::ProjectSharesController, :type => :controller do
           other_user = FactoryGirl.create(:user)
           other_project = FactoryGirl.create(:project, user: other_user)
           expect {
-            make_post_request_with_valid_attrs(project_id: other_project.id)
+            make_post_request_with_valid_attrs(project: other_project)
           }.not_to change(ProjectShare, :count)
         end
 
         it 'responds with a 404 Not Found if the user does not own the project' do
           other_user = FactoryGirl.create(:user)
           other_project = FactoryGirl.create(:project, user: other_user)
-          make_post_request_with_valid_attrs(project_id: other_project.id)
+          make_post_request_with_valid_attrs(project: other_project)
           expect(response.status).to eq 404
         end
 
@@ -93,7 +93,7 @@ RSpec.describe Api::ProjectSharesController, :type => :controller do
 
         it 'does not create a project_share in the database' do
           expect {
-            make_post_request_with_invalid_attrs(project_id: project.id)
+            make_post_request_with_invalid_attrs(project: project.id)
           }.not_to change(ProjectShare, :count)
         end
 
@@ -107,13 +107,13 @@ RSpec.describe Api::ProjectSharesController, :type => :controller do
       before { sign_out }
 
       it 'responds with a 401 Unauthorized' do
-        make_post_request_with_valid_attrs(project_id: project.id)
+        make_post_request_with_valid_attrs(project: project)
         expect(response.status).to eq 401
       end
 
       it 'does not create a project_share in the database' do
         expect {
-          make_post_request_with_valid_attrs(project_id: project.id)
+          make_post_request_with_valid_attrs(project: project)
         }.not_to change(ProjectShare, :count)
       end
     end
@@ -141,13 +141,14 @@ RSpec.describe Api::ProjectSharesController, :type => :controller do
       end
 
       it 'does not delete the record if the user does not own the project' do
-        sign_in(user)
         other_user = FactoryGirl.create(:user)
         other_project = FactoryGirl.create(:project, user: other_user)
         other_project_share = FactoryGirl.create(
           :project_share,
-          project_id: other_project.id
+          project: other_project
         )
+
+        sign_in(user)
 
         expect {
           make_delete_request(other_project_share)
