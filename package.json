@@ -1,0 +1,37 @@
+{
+  "name": "psi_plot",
+  "version": "1.0.0",
+  "description": "A graphing utility for visualizing experimental data",
+  "author": "Stefan Huynh",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/stefvhuynh/psi_plot.git"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "flux": "~2.0.1",
+    "react": "~0.12.2",
+    "react-tools": "~0.12.2",
+    "react-router": "~0.12.4"
+  },
+  "devDependencies": {
+    "browserify": "~9.0.3",
+    "reactify": "~1.0.0",
+    "es6ify": "~1.6.0",
+    "watchify": "~2.4.0",
+    "jest-cli": "~0.4.0"
+  },
+  "scripts": {
+    "test": "jest",
+    "build": "browserify app/assets/javascripts/main.js -o app/assets/javascripts/bundle.js",
+    "start": "watchify -o app/assets/javascripts/bundle.js"
+  },
+  "browserify": {
+    "transform": [
+      "reactify",
+      "es6ify"
+    ]
+  },
+  "jest": {
+  }
+}

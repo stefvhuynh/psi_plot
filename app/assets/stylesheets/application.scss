@@ -1,0 +1,7 @@
+/*
+ * For the bootstrap-sass gem to work, we include all our scss styles in the
+ * form of import statements in here.
+*/
+
+@import "bootstrap-sprockets";
+@import "bootstrap";

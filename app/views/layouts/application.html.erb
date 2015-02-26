@@ -1,14 +1,18 @@
 <!DOCTYPE html>
-<html ng-app="PsiPlotApp">
+<html>
   <head>
     <title>PsiPlot</title>
     <%= stylesheet_link_tag 'application' %>
-    <%= javascript_include_tag 'application' %>
     <%= csrf_meta_tags %>
     <base href="/">
   </head>
 
   <body>
     <%= yield %>
+    <!--
+    This script tag needs to be at the bottom so that we can ensure the page is
+    loaded before any javascript is executed
+    -->
+    <%= javascript_include_tag 'application' %>
   </body>
 </html>
