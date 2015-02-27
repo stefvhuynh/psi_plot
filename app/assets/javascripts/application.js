@@ -13,7 +13,7 @@
 // about supported directives.
 //
 //= require jquery
-//= bootstrap-sprockets
+//= require bootstrap
 //
 // This file is a result of running browserify, which compiles all the CommonJS
 // code. In our case, this is all of our React code.
