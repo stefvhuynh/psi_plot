@@ -24,7 +24,7 @@
   "scripts": {
     "test": "jest",
     "build": "browserify app/assets/javascripts/main.js -o app/assets/javascripts/bundle.js",
-    "start": "watchify -o app/assets/javascripts/bundle.js"
+    "start": "watchify app/assets/javascripts/main.js -o app/assets/javascripts/bundle.js"
   },
   "browserify": {
     "transform": [
@@ -33,5 +33,6 @@
     ]
   },
   "jest": {
+    "scriptPreprocessor": "app/assets/javascripts/preprocessor.js"
   }
 }

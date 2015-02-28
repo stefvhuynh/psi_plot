@@ -1,13 +1,14 @@
 /** @jsx React.DOM */
 
 var React = require('react');
+var Project = require('./components/Project');
 var Router = require('react-router');
 var { DefaultRoute, Link, Route, RouteHandler } = Router;
 
 var PsiPlot = React.createClass({
   render() {
     return(
-      <div className="PsiPlot container">
+      <div className="PsiPlot container-fluid">
         <nav className="navbar navbar-default navbar-fixed-top">
           <div className="container-fluid">
             <div className="navbar-header">
@@ -22,7 +23,7 @@ var PsiPlot = React.createClass({
 
             <div className="collapse navbar-collapse" id="navbar-collapse">
               <ul className="nav navbar-nav">
-                <li><Link to="psi-plot">One place</Link></li>
+                <li><Link to="project">Create a project</Link></li>
                 <li><Link to="psi-plot">Another place</Link></li>
               </ul>
             </div>
@@ -37,6 +38,7 @@ var PsiPlot = React.createClass({
 
 var routes =
   <Route name="psi-plot" path="/" handler={ PsiPlot }>
+    <Route name="project" handler={ Project } />
   </Route>;
 
 Router.run(routes, Handler => {

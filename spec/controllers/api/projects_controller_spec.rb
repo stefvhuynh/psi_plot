@@ -135,7 +135,7 @@ RSpec.describe Api::ProjectsController, :type => :controller do
         end
 
         it 'does not create a project for a different user' do
-          other_user = FactoryGirl.create(:user)
+          other_user = FactoryGirl.build_stubbed(:user)
           expect {
             make_post_request_with_valid_attrs(other_user)
           }.not_to change(other_user.projects, :count)
@@ -168,7 +168,7 @@ RSpec.describe Api::ProjectsController, :type => :controller do
 
   describe 'PUT #update' do
     let(:old_project_name) { Faker::App.name }
-    let(:new_project_name) { "#{old_project_name} v.2.0" }
+    let(:new_project_name) { "#{old_project_name} v.2.0.0" }
     let(:project) do
       FactoryGirl.create(:project, name: old_project_name, user: user)
     end
