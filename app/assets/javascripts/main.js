@@ -4,42 +4,24 @@ var React = require('react');
 var Project = require('./components/Project');
 var Router = require('react-router');
 var { DefaultRoute, Link, Route, RouteHandler } = Router;
+var Header = require('./components/Header');
 
 var PsiPlot = React.createClass({
   render() {
     return(
-      <div className="PsiPlot container-fluid">
-        <nav className="navbar navbar-default navbar-fixed-top">
-          <div className="container-fluid">
-            <div className="navbar-header">
-              <button type="button" className="navbar-toggle collapsed"
-                data-toggle="collapse" data-target="#navbar-collapse">
-                <span className="icon-bar" />
-                <span className="icon-bar" />
-                <span className="icon-bar" />
-              </button>
-              <Link to="psi-plot" className="navbar-brand">PsiPlot</Link>
-            </div>
-
-            <div className="collapse navbar-collapse" id="navbar-collapse">
-              <ul className="nav navbar-nav">
-                <li><Link to="project">Create a project</Link></li>
-                <li><Link to="psi-plot">Another place</Link></li>
-              </ul>
-            </div>
-          </div>
-        </nav>
-
+      <div className="PsiPlot container">
+        <Header />
         <RouteHandler />
       </div>
     );
   }
 });
 
-var routes =
+var routes = (
   <Route name="psi-plot" path="/" handler={ PsiPlot }>
     <Route name="project" handler={ Project } />
-  </Route>;
+  </Route>
+);
 
 Router.run(routes, Handler => {
   React.render(<Handler />, document.getElementById('content'));

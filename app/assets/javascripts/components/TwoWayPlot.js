@@ -30,7 +30,7 @@ var TwoWayPlot = React.createClass({
 
   render() {
     return(
-      <div className="TwoWayPlot">
+      <div className="TwoWayPlot col-sm-6">
         <h4>Line Plot</h4>
         <canvas ref="two-way-plot-canvas" />
       </div>
