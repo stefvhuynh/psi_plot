@@ -1,10 +1,10 @@
 /** @jsx React.DOM */
 
 var React = require('react');
-var Project = require('./components/Project');
 var Router = require('react-router');
 var { DefaultRoute, Link, Route, RouteHandler } = Router;
 var Header = require('./components/Header');
+var Project = require('./components/Project');
 
 var PsiPlot = React.createClass({
   render() {
