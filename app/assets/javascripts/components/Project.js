@@ -1,17 +1,17 @@
 /** @jsx React.DOM */
 
-var React = require('react');
-var PlotContainer = require('./PlotContainer');
+const React = require('react');
+const PlotContainer = require('./PlotContainer');
 
-var Project = React.createClass({
+const Project = React.createClass({
   getInitialState() {
     return { numberOfPlots: 1 };
   },
 
   render() {
-    var plots = [];
+    let plots = [];
 
-    for (var i = 0; i < this.state.numberOfPlots; i++) {
+    for (let i = 0; i < this.state.numberOfPlots; i++) {
       plots.push(<PlotContainer />);
     }
 

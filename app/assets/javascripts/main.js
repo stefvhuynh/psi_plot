@@ -1,12 +1,12 @@
 /** @jsx React.DOM */
 
-var React = require('react');
-var Router = require('react-router');
-var { DefaultRoute, Link, Route, RouteHandler } = Router;
-var Header = require('./components/Header');
-var Project = require('./components/Project');
+const React = require('react');
+const Router = require('react-router');
+const { DefaultRoute, Link, Route, RouteHandler } = Router;
+const Header = require('./components/Header');
+const Project = require('./components/Project');
 
-var PsiPlot = React.createClass({
+const PsiPlot = React.createClass({
   render() {
     return(
       <div className="PsiPlot container">
@@ -17,7 +17,7 @@ var PsiPlot = React.createClass({
   }
 });
 
-var routes = (
+const routes = (
   <Route name="psi-plot" path="/" handler={ PsiPlot }>
     <Route name="project" handler={ Project } />
   </Route>

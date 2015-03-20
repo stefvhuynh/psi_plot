@@ -1,11 +1,11 @@
 /** @jsx React.DOM */
 
-var React = require('react');
-var Chart = require('chart.js');
+const React = require('react');
+const Chart = require('chart.js');
 
-var TwoWayPlot = React.createClass({
+const TwoWayPlot = React.createClass({
   componentDidMount() {
-    var context = this.refs['two-way-plot-canvas']
+    const context = this.refs['two-way-plot-canvas']
       .getDOMNode()
       .getContext('2d');
 

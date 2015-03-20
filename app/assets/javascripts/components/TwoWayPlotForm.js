@@ -1,8 +1,8 @@
 /** @jsx React.DOM */
 
-var React = require('react');
+const React = require('react');
 
-var TwoWayPlotForm = React.createClass({
+const TwoWayPlotForm = React.createClass({
   render() {
     return(
       <form className="TwoWayPlotForm col-sm-6 horizontal-form">

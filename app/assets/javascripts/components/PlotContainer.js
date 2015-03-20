@@ -1,10 +1,10 @@
 /** @jsx React.DOM */
 
-var React = require('react');
-var TwoWayPlotForm = require('./TwoWayPlotForm');
-var TwoWayPlot = require('./TwoWayPlot');
+const React = require('react');
+const TwoWayPlotForm = require('./TwoWayPlotForm');
+const TwoWayPlot = require('./TwoWayPlot');
 
-var PlotContainer = React.createClass({
+const PlotContainer = React.createClass({
   render() {
     return(
       <div className="PlotContainer row">
